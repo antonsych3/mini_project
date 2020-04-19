@@ -33,6 +33,10 @@ public class PackageData implements Serializable {
         return students;
     }
 
+    public void setStudents(ArrayList<Students> students) {
+        this.students = students;
+    }
+
     public boolean addStudent(Students student){
         if (!students.contains(student) && student!=null){
             students.add(student);

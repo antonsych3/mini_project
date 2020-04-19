@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListFrame extends JFrame {
-    private JTextArea listTa;
+   public JTextArea listTa;
     private JButton backBtn;
 
     public ListFrame() {
@@ -16,18 +16,20 @@ public class ListFrame extends JFrame {
         listTa.setBounds(20, 20, 540, 250);
         listTa.setEditable(false);
         add(listTa);
+        JScrollPane scroll = new JScrollPane(listTa);
+        scroll.setBounds(20, 20, 540, 250);
+        getContentPane().add(scroll);
 
         backBtn = new JButton("BACK");
         backBtn.setBounds(200, 300, 200, 30);
         backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.menuFrame.setVisible(true);
-                Main.listFrame.setVisible(false);
+                Client.menuFrame.repaint();
+                Client.menuFrame.setVisible(true);
+                Client.listFrame.setVisible(false);
             }
         });
         add(backBtn);
-
-
     }
 }

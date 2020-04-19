@@ -48,10 +48,17 @@ public class AddFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Main.outStream.writeObject(new PackageData("ADD_STUDENT"));
-                } catch (IOException ex) {
+                    PackageData packageData = new PackageData("ADD_STUDENT");
+                    packageData.setStudent(new Students(null, nameTf.getText(), surnameTf.getText(), (int)ageCb.getSelectedItem()));
+                    Client.outStream.writeObject(packageData);
+                    packageData = (PackageData) Client.inputStream.readObject();
+                    System.out.println(packageData.getOperationType());
+                } catch (IOException | ClassNotFoundException ex) {
                     ex.printStackTrace();
                 }
+                nameTf.setText("");
+                surnameTf.setText("");
+                ageCb.setSelectedIndex(25);
                 repaint();
             }
         });
@@ -62,8 +69,8 @@ public class AddFrame extends JFrame {
         backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.menuFrame.setVisible(true);
-                Main.addFrame.setVisible(false);
+                Client.menuFrame.setVisible(true);
+                Client.addFrame.setVisible(false);
             }
         });
         add(backBtn);

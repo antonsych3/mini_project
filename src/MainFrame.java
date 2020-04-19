@@ -17,8 +17,8 @@ public class MainFrame extends JFrame {
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.addFrame.setVisible(true);
-                Main.menuFrame.setVisible(false);
+                Client.addFrame.setVisible(true);
+                Client.menuFrame.setVisible(false);
             }
         });
         add(addBtn);
@@ -28,14 +28,23 @@ public class MainFrame extends JFrame {
         listBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                PackageData packageData = new PackageData("LIST_STUDENTS");
+                PackageData temp;
+
                 try {
-                    Main.outStream.writeObject(new PackageData("LIST_STUDENTS"));
-                } catch (IOException ex) {
+                    Client.outStream.writeObject(packageData);
+                    temp = (PackageData) Client.inputStream.readObject();
+                    System.out.println(temp.getOperationType() + " " +  temp.getStudents().size());
+                    Client.listFrame.listTa.setText("");
+                    for (Students st: temp.getStudents()) {
+                        Client.listFrame.listTa.append(st.toString() + "\n");
+                    }
+                } catch (IOException | ClassNotFoundException ex) {
                     ex.printStackTrace();
                 }
-
-                Main.listFrame.setVisible(true);
-                Main.menuFrame.setVisible(false);
+                Client.listFrame.repaint();
+                Client.listFrame.setVisible(true);
+                Client.menuFrame.setVisible(false);
             }
         });
         add(listBtn);
